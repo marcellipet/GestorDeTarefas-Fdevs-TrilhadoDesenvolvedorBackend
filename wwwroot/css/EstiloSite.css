@@ -1,6 +1,9 @@
-﻿body {
-    background-color: #ffe6f0; 
+﻿
+body {
+    background-color: #fffbde;
     font-family: 'Segoe UI', sans-serif;
+    overflow-x: hidden;
+    padding: 2px;
 }
 
 .navbar {
@@ -13,7 +16,8 @@
 }
 
     .btn-primary:hover {
-        background-color: #ff80bf;
+        background-color: #fbb3b6;
+        color: #7e614a;
     }
 
 .card {
