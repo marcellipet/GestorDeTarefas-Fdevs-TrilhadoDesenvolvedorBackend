@@ -1,0 +1,20 @@
+﻿<link rel="stylesheet" href="~/css/site.css" />
+
+@model IEnumerable<GestorTarefas.Models.Tarefa>
+
+<h1>🌸 Lista de Tarefas 🌸</h1>
+
+<a class="btn btn-primary mb-3" href="/Tarefas/Create">+ Nova Tarefa</a>
+
+<div>
+    @foreach (var item in Model)
+    {
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:5px;">
+            <h4>@item.Titulo</h4>
+            <p>@item.Descricao</p>
+            <p><b>Status:</b> @(item.Concluida ? "✅ Concluída" : "⏳ Pendente")</p>
+            <a class="btn btn-secondary btn-sm" href="/Tarefas/Edit/@item.Id">Editar</a>
+            <a class="btn btn-danger btn-sm" href="/Tarefas/Delete/@item.Id">Excluir</a>
+        </div>
+    }
+</div>
