@@ -1,6 +1,6 @@
 ﻿<link rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-      integrity="sha512-pO1gqI7ZyZr6Rm3HnGmX7ZP1HuY7a8CkC+ZMj50Y1+YHQ6dOeB7wY5Nl+s3fX6t9Kp0aR7xV6u2s7tM3e+9bZQ=="
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="sha512-zjNyv5gY91UO3pJmXx4OSf8gH4n6zvFWbYQDRsBv+Pu6nQfshhCGvKqZp5T8FQ2kR6uSxD7IvO+jxRul8WzkgA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
 
@@ -59,7 +59,7 @@
     .caixaDeTarefas {
         margin-top: 30px;
         margin-bottom: 10px;
-        padding: 30px !important;
+        padding: 20px !important;
         border-radius: 5px;
         width: 700px;
         background-color: #ffccd5;
@@ -77,6 +77,13 @@
         color: #7e614a;
     }
 
+    #descTarefa {
+        padding: 2px;
+        margin-left: 3px;
+        font-size: 17px;
+        font-weight: 400;
+    }
+
     .status {
 
     }
@@ -91,6 +98,18 @@
         border: 1px solid #ab8c74;
         font-weight: 500;
     }
+
+    .seta {
+        font-weight: 600;
+        font-size: 20px;
+        color: #ab8c74;
+    }
+
+    .linha-tarefa {
+        display: flex;
+        align-items: center; 
+        gap: 2px; 
+    }
 </style>
 
 <div class="container-tarefas">
@@ -99,7 +118,10 @@
         {
             <div class="caixaDeTarefas" style="border:3px solid #ab8c74; padding:8px; margin-bottom:10px;">
                 <h4 id="descTitulo">@item.Titulo</h4>
-                <p>@item.Descricao</p>
+                    <div class="linha-tarefa">
+                        <p class="seta">--></p>
+                        <p id="descTarefa">@item.Descricao</p>
+                    </div>
                 <p class="status"><b>Status:</b> @(item.Concluida ? "✅Concluída" : "⏳ Pendente")</p>
                 <a class="btn btn-primary mb-3 botao" href="/Tarefas/Edit/@item.Id">Editar</a>
                 <a class="btn btn-primary mb-3 botao" href="/Tarefas/Delete/@item.Id">Excluir</a>
