@@ -49,7 +49,7 @@
         font-size: 30px;
         color: #7e614a !important;
         background-color: #ffe0e9;
-        width: 1298px;
+        width: 1299px;
         padding: 5px;
         border: 5px dashed #ab8c74;
         margin: 2px;
@@ -72,7 +72,7 @@
         border-radius: 5px;
         background-color: #fffbde;
         margin: 5px !important;
-        width: 350px;
+        width: 650px;
         border: 2px dashed #ab8c74;
         color: #7e614a;
     }
@@ -81,11 +81,15 @@
         padding: 2px;
         margin-left: 3px;
         font-size: 17px;
-        font-weight: 400;
+        font-weight: 500;
+        color: #7e614a;
     }
 
     .status {
-
+        padding: 2px;
+        margin-left: 5px;
+        color: #3e3013;
+        gap: 5px
     }
     
     .botao {
@@ -103,6 +107,8 @@
         font-weight: 600;
         font-size: 20px;
         color: #ab8c74;
+        margin-left: 20px;
+
     }
 
     .linha-tarefa {
@@ -110,6 +116,26 @@
         align-items: center; 
         gap: 2px; 
     }
+
+    #excluir {
+        background-color: #ff758f;
+        color: #590D22;
+        border: 1px solid #590d22;
+    }
+        #excluir:hover {
+            background-color: #C9184A;
+            color: #FFB3C1;
+        }
+
+    #editar {
+        background-color: #f6e2b3;
+        border: 1px solid #C9184A;
+        color: #C9184A;
+    }
+
+        #editar:hover {
+            background-color: #f3c677;
+        }
 </style>
 
 <div class="container-tarefas">
@@ -122,9 +148,9 @@
                         <p class="seta">--></p>
                         <p id="descTarefa">@item.Descricao</p>
                     </div>
-                <p class="status"><b>Status:</b> @(item.Concluida ? "✅Concluída" : "⏳ Pendente")</p>
-                <a class="btn btn-primary mb-3 botao" href="/Tarefas/Edit/@item.Id">Editar</a>
-                <a class="btn btn-primary mb-3 botao" href="/Tarefas/Delete/@item.Id">Excluir</a>
+                <p class="status"><b>Status:</b> @(item.Concluida ? "🟢Concluída" : "🔴Pendente")</p>
+                <a id="editar" class="btn btn-primary mb-3 botao" href="/Tarefas/Edit/@item.Id">Editar</a>
+                <a  id="excluir" class="btn btn-primary mb-3 botao" href="/Tarefas/Delete/@item.Id">Excluir</a>
             </div>
         }
     </div>
