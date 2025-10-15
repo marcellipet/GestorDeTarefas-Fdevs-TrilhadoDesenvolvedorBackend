@@ -22,6 +22,7 @@
         cursor: default;
         display: flex;
         align-items: flex-end;
+        margin-left: 100px;
     }
 
     .container-tarefas {
@@ -34,19 +35,19 @@
         color: #ab8c74;
         padding: 3px;
         margin-left: 20px;
-        gap: 30px;
+        display: block; 
+        margin-bottom: 1px;
     }
 
     .tituloEscrever {
         width: 100px;
-        gap: 30px;
-        margin-bottom: 15px;
+        margin-bottom: 2px;
     }
 
     .tituloInput {
         height: 18px !important;
         margin-bottom: 20px;
-        width: 485px !important;
+        width: 415px;
     }
 
     .inputText {
@@ -55,35 +56,63 @@
         display: inline-block;
         height: 70px;
         border-radius:5px;
+        margin-left:18px;
     }
 
-    #botaoSalvar {
-        margin: 10px;
+    .botoes {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px; /* espaço entre os botões */
+        margin-top: 15px;
+        margin-right: 10px;
+    }
+
+    .botaoCancelar, .botaoSalvar {
         padding: 5px 25px;
+        font-size: 15px;
+        font-weight: bold;
+        border-radius: 5px;
+        border: 2px solid #b49982;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .botaoSalvar {
         background-color: #ffd2d4;
         color: #7e6651;
-        font-size: 15px;
-        border: 2px solid #b49982;
-        border-radius: 5px;
-        margin-top: 15px;
-        font-weight: bold;
-        margin-left: 480px;
     }
-        #botaoSalvar:hover{
+
+        .botaoSalvar:hover {
             background-color: #fbb3b6;
             color: #7e614a;
-            border: 2px solid #7e614a;
+            border-color: #7e614a;
+        }
+
+    .botaoCancelar {
+        background-color: #f8e0c7;
+        color: #7e614a;
+    }
+
+        .botaoCancelar:hover {
+            background-color: #f1c79b;
+            color: #7e4a2e;
+            border-color: #7e4a2e;
         }
 
     .containerDesc {
         background-color: #fff0f3;
         border: 3px solid #ab8c74;
         padding: 5px;
-        width: 700px;
+        width: 600px;
         border-radius: 5px;
         display:flex;
         flex-wrap:wrap;
     }
+
+    /* .labelDescricao {
+        display: block;
+        margin-bottom: 5px;
+    } */
 
 </style>
 
@@ -91,14 +120,19 @@
 
 <div class="container-tarefas">
     <div class="containerDesc">
-        <form>
+        <form asp-action="Create" method="post">
             <label class="textoEscrever tituloEscrever">Título: </label>
             <input class="inputText tituloInput" type="text" />
             <br />
             <label class="textoEscrever">Descrição: </label>
             <textarea class="inputText"></textarea>
             <br />
-            <button id="botaoSalvar" type="submit">Salvar</button>
+
+
+            <div class="botoes">
+                <a class="botaoCancelar" asp-action="Index">Cancelar</a>
+                <button class="botaoSalvar" type="submit">Salvar</button>
+            </div>
         </form>
     </div>
 
