@@ -1,189 +1,306 @@
-﻿<link rel="stylesheet"
+﻿@model IEnumerable<GestorTarefas.Models.Tarefa>
+
+<link rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-zjNyv5gY91UO3pJmXx4OSf8gH4n6zvFWbYQDRsBv+Pu6nQfshhCGvKqZp5T8FQ2kR6uSxD7IvO+jxRul8WzkgA=="
       crossorigin="anonymous"
       referrerpolicy="no-referrer" />
 
-<link rel="stylesheet" href="~/css/site.css" />
-
-@model IEnumerable<GestorTarefas.Models.Tarefa>
-
-<h1 class="titulo"> ⊹ LISTA DE TAREFAS ˚⊹⋆ </h1>
-
-<a class="btn btn-primary mb-3 novaTarefa" href="/Tarefas/Create">+ Nova Tarefa</a>
-
 <style>
-
-    .container-tarefas {
-        display: flex;
-        align-items: flex-start;
-        gap: 30px; 
+    :root {
+        --rosa-escuro: #ff8daa;
+        --rosa-claro: #fdaeae;
+        --amarelo-suave: #f6e2b3;
+        --bege: #b49982;
+        --marrom-claro: #7e6651;
+        --marrom: #7e614a;
+        --marrom-rosado: #ab8c74;
+        --creme: #fffbde;
+        --rosa-pastel: #ffd2d4;
+        --rosa-hover: #fbb3b6;
     }
 
-    .lista {
+    body {
+        background-color: var(--creme);
+        font-family: 'Segoe UI', sans-serif;
+        /* padding: 10px;*/
+        /* margin-bottom: 20px;  */
+    }
+
+    .logo {
+        font-size: 28px;
+        color: var(--marrom);
+        font-weight: bold;
+    }
+
+    .menu {
+        list-style: none;
+        display: flex;
+        gap: 15px;
+    }
+
+        .menu li a {
+            text-decoration: none;
+            color: var(--marrom-claro);
+            padding: 6px 14px;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+            .menu li a:hover {
+                background-color: var(--rosa-claro);
+                color: var(--marrom);
+            }
+
+            .menu li a.ativo {
+                background-color: #ff8daa;
+                color: #fff;
+                padding: 5px 15px;
+                border-radius: 8px;
+            }
+
+    .conteudo {
         display: flex;
         flex-direction: column;
-    }
-
-    .arte {
-        white-space: pre; 
-        font-family: monospace;
-        font-size: 12px;
-        color: #ff0a54;
-        cursor: default;
-    }
-
-    .novaTarefa {
-        padding: 5px 25px;
-        font-weight: 500;
-        border-radius: 5px;
-        text-decoration: none;
-        margin-bottom: 20px;
-        background-color: #ab8c74;
-        border: 2px solid #7e614a;
-        color: #ffd2d4;
+        align-items: center;
+        justify-content: center;
     }
 
     .titulo {
         text-align: center;
-        font-size: 30px;
-        color: #7e614a !important;
+        font-size: 32px;
+        color: var(--marrom);
         background-color: #ffe0e9;
-        width: 1299px;
-        padding: 5px;
-        border: 5px dashed #ab8c74;
-        margin: 2px;
-        margin-bottom: 25px;
+        width: fit-content;
+        padding: 10px 25px;
+        border: 4px dashed var(--marrom-rosado);
+        border-radius: 12px;
+        margin: 0 auto 25px auto;
+        box-shadow: 0 3px 6px rgba(126,97,74,0.2);
+        margin-top: 30px;
     }
 
-    .caixaDeTarefas {
-        margin-top: 30px;
-        margin-bottom: 10px;
-        padding: 20px !important;
-        border-radius: 5px;
-        width: 700px;
-        background-color: #ffccd5;
+    .novaTarefa {
+        display: inline-block;
+        background-color: var(--amarelo-suave);
+        color: var(--marrom);
+        font-weight: bold;
+        padding: 8px 18px;
+        border-radius: 8px;
+        margin-bottom: 25px;
+        text-decoration: none;
+        transition: 0.3s;
     }
+
+        .novaTarefa:hover {
+            background-color: var(--rosa-claro);
+        }
+
+    .container-tarefas {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        width: 100%;
+    }
+
+    .container-tarefas-wrapper {
+        background-color: var(--creme);
+        border-radius: 15px;
+        padding: 30px;
+        max-width: 1200px;
+        margin: 0 auto 60px auto;
+        box-shadow: 0 4px 12px rgba(126,97,74,0.2);
+    }
+
+    .card-tarefa {
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(126,97,74,0.15);
+        transition: all 0.3s ease;
+        border: 2px solid var(--marrom-rosado);
+        position: relative;
+        min-height: 200px;
+    }
+
+        .card-tarefa:nth-child(3n+1) {
+            background-color: var(--rosa-pastel);
+        }
+
+        .card-tarefa:nth-child(3n+2) {
+            background-color: var(--creme);
+        }
+
+        .card-tarefa:nth-child(3n+3) {
+            background-color: var(--amarelo-suave);
+        }
+
+        .card-tarefa:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(126,97,74,0.25);
+        }
 
     #descTitulo {
-        text-align: left;
-        padding: 2px 15px;
-        font-size: 25px;
-        border-radius: 5px;
-        background-color: #fffbde;
-        margin: 5px !important;
-        width: 650px;
-        border: 2px dashed #ab8c74;
-        color: #7e614a;
+        font-size: 20px;
+        color: var(--marrom);
+        margin-bottom: 8px;
     }
 
     #descTarefa {
-        padding: 2px;
-        margin-left: 3px;
-        font-size: 17px;
-        font-weight: 500;
-        color: #7e614a;
-    }
-
-    .status {
-        padding: 2px;
-        margin-left: 5px;
-        color: #3e3013;
-        gap: 5px
-    }
-    
-    .botao {
-        background-color: #ffcce5;
-        padding: 5px 25px;
-        margin: 5px;
-        border-radius: 5px;
-        text-align: center;
-        text-decoration: none;
-        border: 1px solid #ab8c74;
-        font-weight: 500;
-    }
-
-    .seta {
-        font-weight: 600;
-        font-size: 20px;
-        color: #ab8c74;
-        margin-left: 20px;
-
+        font-size: 16px;
+        color: var(--marrom-claro);
     }
 
     .linha-tarefa {
         display: flex;
-        align-items: center; 
-        gap: 2px; 
+        align-items: flex-start;
+        gap: 5px;
+        margin-bottom: 10px;
     }
 
-    #excluir {
-        background-color: #ff758f;
-        color: #590D22;
-        border: 1px solid #590d22;
+    /* .seta {
+        font-weight: bold;
+        color: var(--marrom-rosado);
+        margin-bottom: 4px;
+    } */
+
+    .status {
+        font-weight: bold;
+        color: var(--marrom-claro);
+        margin-bottom: 12px;
     }
-        #excluir:hover {
-            background-color: #C9184A;
-            color: #FFB3C1;
-        }
+
+    .botoes-tarefa {
+        display: flex;
+        gap: 10px;
+    }
+
+    .botao {
+        text-decoration: none;
+        padding: 6px 14px;
+        border-radius: 8px;
+        font-weight: 500;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
 
     #editar {
-        background-color: #f6e2b3;
-        border: 1px solid #C9184A;
-        color: #C9184A;
+        background-color: var(--amarelo-suave);
+        color: var(--marrom);
+        border: 1px solid var(--marrom-rosado);
     }
 
         #editar:hover {
-            background-color: #f3c677;
+            background-color: var(--rosa-claro);
         }
+
+    #excluir {
+        background-color: var(--rosa-escuro);
+        color: var(--creme);
+        border: 1px solid var(--marrom-rosado);
+    }
+
+        #excluir:hover {
+            background-color: var(--rosa-hover);
+            color: var(--marrom);
+        }
+
+    .assinatura {
+        margin-top: 30px;
+        font-style: italic;
+        color: var(--marrom-rosado);
+    }
+
+    .logo {
+        display: inline-block;
+        font-size: 28px;
+        color: var(--marrom);
+        font-weight: bold;
+        position: relative;
+        transition: transform 0.3s ease, text-shadow 0.3s ease;
+    }
+
+        .logo:hover {
+            transform: scale(1.15) rotate(-3deg);
+            color: var(--rosa-escuro);
+            text-shadow: 0 0 12px rgba(255, 182, 193, 0.8), 0 0 25px rgba(255, 192, 203, 0.6);
+        }
+
+
+    .logo {
+        display: inline-block;
+        font-size: 33px;
+        color: var(--rosa-escuro);
+        font-weight: bold;
+        position: relative;
+        animation: floatSoft 3s ease-in-out infinite;
+    }
+
+        .logo:hover {
+            transform: scale(1.1);
+        }
+
+    @@keyframes floatSoft {
+        0%, 100% {
+            transform: translateY(0);
+        }
+
+        50% {
+            transform: translateY(-8px);
+        }
+    }
 </style>
 
-<div class="container-tarefas">
-    <div class="lista">
-        @foreach (var item in Model)
-        {
-            <div class="caixaDeTarefas" style="border:3px solid #ab8c74; padding:8px; margin-bottom:10px;">
-                <h4 id="descTitulo">@item.Titulo</h4>
+<nav class="navbar">
+    <div class="navbar-container">
+        <h2 class="logo">Napolitask</h2>
+        <ul class="menu">
+            <li><a href="/" class="ativo">Início</a></li>
+            <li><a href="/Tarefas/Create">Nova Tarefa</a></li>
+            <li><a href="/Tarefas/Sobre">Sobre</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="conteudo">
+    <h1 class="titulo">⊹ Lista de Tarefas ˚⊹⋆</h1>
+
+    <a class="novaTarefa" href="/Tarefas/Create">
+        <i class="fa-solid fa-plus"></i> Nova Tarefa
+    </a>
+
+    <div class="container-tarefas-wrapper">
+        <div class="container-tarefas">
+            @foreach (var item in Model)
+            {
+                <div class="card-tarefa">
+                    <h4 id="descTitulo">@item.Titulo</h4>
+
                     <div class="linha-tarefa">
-                        <p class="seta">--></p>
+                        @* <p class="seta">→</p> *@
                         <p id="descTarefa">@item.Descricao</p>
                     </div>
-                <p class="status"><b>Status:</b> @(item.Concluida ? "🟢Concluída" : "🔴Pendente")</p>
-                <a id="editar" class="btn btn-primary mb-3 botao" href="/Tarefas/Edit/@item.Id">Editar</a>
-                <a  id="excluir" class="btn btn-primary mb-3 botao" href="/Tarefas/Delete/@item.Id">Excluir</a>
-            </div>
-        }
+
+                    <p class="status">
+                        <b>Status:</b> @(item.Concluida ? "🟢 Concluída" : "🔴 Pendente")
+                    </p>
+
+                    <div class="botoes-tarefa">
+                        <a id="editar" class="botao" href="/Tarefas/Edit/@item.Id">
+                            <i class="fa-solid fa-pen"></i> Editar
+                        </a>
+                        <a id="excluir" class="botao" href="/Tarefas/Delete/@item.Id">
+                            <i class="fa-solid fa-trash"></i> Excluir
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
     </div>
 
-    <p class="arte">
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⠶⢞⣟⣯⠶⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⢖⡛⠥⠒⠋⠉⠀⠈⢻⡫⣧⠀⠀⠀⠀⠀⠀⠀⢄⠀⠀⠀⢠⢄⠀⠀⠀⠇⠀⢀⠄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣥⠋⠀⢠⢾⠿⠿⢿⢳⡀⢳⡽⣇⠀⠀⠀⠀⠀⢀⠈⠢⡄⠀⠼⠏⢧⡀⡼⢀⡔⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⡧⠇⠀⣏⡧⡴⢳⡄⣾⡇⠀⢣⡺⡆⠀⠀⠀⠀⠀⠈⠲⢌⠃⡟⠀⠪⠳⠥⡥⣤⣤⡦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢹⣼⡀⠈⠙⠓⣋⡰⢙⡇⠀⠀⡧⢻⡄⠀⠀⢠⡶⣦⠶⠒⠘⣡⣦⣴⠢⡌⠁⡡⠔⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢯⣜⣶⣯⠵⠖⠒⠋⠀⣠⠔⣩⡞⠃⠀⠀⠀⠉⠓⠦⣄⠐⢧⡘⠬⠟⣹⠆⡇⢀⠀⠐⠒⠂⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⢛⣸⠼⠃⠀⠀⠀⠀⠤⠤⠤⢘⡘⡇⠀⠻⣤⠿⠃⠀⠘⢇⠛⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⠒⠁⡰⢀⣀⡤⠚⡖⠦⣤⣠⢊⡧⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡯⠟⠉⠀⢡⠘⡀⠀⠉⠉⠛⠝⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡐⠳⡠⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠑⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⡇⠀⠄⠊⡱⢄⠀⠀⠀⢠⠀⢠⠁⠀⠀⠀⠀⠀⢀⡀⢤⠀⡄⡀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣤⡀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠣⠀⠀⠀⠀⠊⠱⣄⠀⡼⠀⡈⠀⢀⣀⣴⠲⢉⠉⠀⠐⠀⡈⡇⠀⠀⠀⠀⢀⡠⢶⣚⠭⠚⠋⣁⡠⡶⢤⣄⣀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⠀⠀⢰⣶⣄⠀⠀⣟⢷⡇⣠⣦⠚⠍⠂⠀⣤⣴⣶⢿⡄⠀⣈⠅⠀⠀⠀⠀⢹⡅⡏⠀⠀⡴⡫⠑⣩⣬⣑⡚⠼⡛⢶
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⣄⠀⣿⣿⣽⣷⣄⡟⠙⠁⠛⠁⠀⣠⣴⣿⢿⠻⣧⡿⠀⠨⡝⠀⠀⠀⠀⠀⢸⠆⡇⠀⢼⢏⠀⢞⡕⢒⠺⡏⡧⠘⢸
-        ⠀⠀⠀⠀⠀⠀⡀⠀⠀⠀⠀⡄⠀⠀⢻⡯⠖⣏⠻⠷⣄⣀⣠⣴⠿⣟⠩⢦⠪⣞⡿⠁⠀⢰⠁⠀⠀⠀⠀⠀⢸⡇⡇⠀⠘⡊⡌⠶⣍⠽⠁⡇⡇⠈⣸
-        ⠀⠀⠀⠀⠄⡀⠈⠀⠠⣀⠁⣷⣆⡀⢸⣿⣿⢷⣄⠜⠆⣉⠁⣴⣷⣿⠎⡄⣂⣿⠃⠀⠈⡞⠀⠀⠀⠀⠀⠀⠨⡇⢁⠀⠀⠱⡝⠠⠤⣤⣰⣼⠁⠧⡇
-        ⠀⠀⠀⠀⠀⠀⠈⠐⠠⣀⡝⠧⣤⠁⢺⣿⣹⡾⠋⠷⣼⢤⠟⠒⢛⡾⡡⣵⣿⢃⣀⣤⣼⠤⠐⠀⠂⠀⠀⠀⠀⠸⣬⣓⠤⡄⣨⣛⣛⣉⢁⣀⠜⣸⠁
-        ⠀⠀⠀⠀⢀⣠⢴⡲⠉⠀⠉⠳⢈⣠⣿⠓⠈⣇⠀⠀⠀⠀⠀⠀⣰⡇⡼⣽⠃⣋⣉⣭⡇⠠⠠⠄⠀⠀⠀⠀⠀⠀⠀⠉⠉⠙⠛⠲⠷⠾⠭⠶⠚⠁⠀
-        ⠀⢀⣤⡶⠓⠉⠀⣀⣤⣶⣶⢿⡟⡯⣀⣣⣶⠏⠀⠀⠀⠀⠀⠀⢾⣅⠶⣿⣦⣭⣭⠼⠷⡄⠤⠤⠤⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⡜⡛⡂⡀⠀⠀⠘⢿⣿⡷⣟⣯⣋⢖⡿⠽⠏⠶⡆⠀⠀⣠⣤⣀⣀⣚⣳⣜⢋⡿⣦⣀⠀⠊⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠉⠛⠶⠴⣠⣀⠀⠀⠀⠉⠉⢛⠻⠿⢶⣛⡎⡩⢿⣐⣾⠓⣡⢀⣬⡩⣩⣙⠄⢊⡽⣻⢶⡀⠁⠳⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠉⠂⠊⢧⣦⡞⢋⣤⠄⠀⢿⣮⠵⡘⢿⡟⣵⣺⣿⠟⠓⣿⠾⣟⣾⣾⣽⣳⣟⣦⠈⡚⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠂⠀⠀⢠⠛⡇⢰⡄⠈⣷⣯⢱⠘⣮⣯⡟⠁⢸⣧⢹⣶⠀⠀⠉⠛⢻⣯⣽⣿⠈⠊⢣⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠁⠀⢸⡟⠁⠀⠹⣿⣹⣲⣿⡿⠁⠹⣦⠿⡍⠙⠗⠒⠦⣤⢀⡀⢉⠉⠀⠀⡓⢧⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠜⠁⢡⠂⠀⠀⣿⣷⣿⡯⠀⠠⣠⡟⡄⠙⡀⠈⠂⠀⠀⠈⠉⠒⠢⠬⠴⠤⠛⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠔⠁⠀⠀⠀⢳⡀⠀⠘⢿⡟⠁⠀⣸⠏⠀⠀⡀⠑⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣏⠀⠀⠀⠀⢀⣰⠏⠀⠀⠀⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠸⡄⠀⠀⠀⢢⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠳⣆⡆⠞⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+
+    <p class="assinatura">
+        feito com 🍦 amor e código
     </p>
-</div>
+</section>

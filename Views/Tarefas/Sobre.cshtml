@@ -1,0 +1,112 @@
+﻿@{
+    ViewData["Title"] = "Sobre";
+}
+
+<link rel="stylesheet" href="~/css/site.css" />
+
+<style>
+    html {
+        overflow-y: hidden !important;
+    }
+    :root {
+        --rosa: #ffd2d4;
+        --marrom: #7e614a;
+        --creme: #fff7ec;
+        --rosaclaro: #ffeef2;
+    }
+
+    .sobre-header {
+        background: linear-gradient(90deg, var(--rosa), var(--creme), var(--rosaclaro));
+        border: 3px dashed var(--marrom);
+        padding: 15px 30px;
+        border-radius: 15px;
+        margin: 20px auto;
+        margin-top: 150px;
+        max-width: 950px;
+        text-align: center;
+        box-shadow: 0 3px 6px rgba(126, 97, 74, 0.15);
+        transition: all 0.3s ease-in-out;
+    }
+
+        .sobre-header:hover {
+            transform: scale(1.01);
+            box-shadow: 0 6px 10px rgba(126, 97, 74, 0.25);
+        }
+
+        .sobre-header h1 {
+            font-size: 38px;
+            color: var(--marrom);
+            margin-top: 2px !important;
+            margin-bottom: 0px !important;
+            letter-spacing: 1px;
+        }
+
+        .sobre-header p {
+            font-size: 18px;
+            color: #9a7a60;
+            max-width: 800px;
+            margin:auto;
+            margin-top: 2px;
+            margin-bottom: 10px !important;
+        }
+
+    .sobre-container {
+        background-color: var(--creme);
+        border: 2px solid var(--rosa);
+        border-radius: 10px;
+        padding: 25px;
+        margin: 25px auto;
+        max-width: 950px;
+        color: var(--marrom);
+        font-size: 17px;
+        line-height: 1.7;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+        .sobre-container strong {
+            color: #b47b5a;
+        }
+
+    .menu li a.ativo {
+        background-color: #ff8daa;
+        color: #fff;
+        padding: 5px 15px;
+        border-radius: 8px;
+    }
+</style>
+
+<nav class="navbar">
+    <div class="navbar-container">
+        <h2 class="logo">🍨 Napolitask</h2>
+        <ul class="menu">
+            <li><a href="/">Início</a></li>
+            <li><a href="/Tarefas/Create">Nova Tarefa</a></li>
+            <li><a href="/Tarefas/Sobre" class="ativo">Sobre</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="sobre-header">
+    <h1>Sobre o Napolitask</h1>
+    <p>Um projeto desenvolvido com carinho e código.</p>
+</div>
+
+<div class="sobre-container">
+    <p>
+        Este projeto foi desenvolvido utilizando <strong>ASP.NET MVC</strong> como parte do
+        <strong>projeto final do curso FDevs</strong>, na trilha de <strong>Backend</strong>.
+    </p>
+    <p>
+        O objetivo principal é demonstrar os conhecimentos adquiridos ao longo da formação,
+        aplicando boas práticas de desenvolvimento, arquitetura de software e organização de código
+        dentro do ecossistema .NET.
+    </p>
+    <p>
+        O sistema simula o gerenciamento de tarefas, permitindo criar, visualizar e administrar atividades
+        de forma simples e intuitiva. Além disso, foi pensado para manter uma identidade visual coesa,
+        com uma interface amigável e inspirada em tons suaves.
+    </p>
+    <div class="creditos">
+        <p>Por <strong>Marcelli Petranela</strong></p>
+    </div>
+</div>

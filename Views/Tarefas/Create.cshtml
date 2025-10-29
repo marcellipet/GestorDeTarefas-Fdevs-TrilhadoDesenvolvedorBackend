@@ -1,178 +1,231 @@
-﻿<link rel="stylesheet" href="~/css/site.css" />
+﻿@model GestorTarefas.Models.Tarefa
+@{
+    Layout = null;
+}
+
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+
+<link rel="stylesheet" href="~/css/estilosite.css" />
+
+<nav class="navbar">
+    <div class="navbar-container">
+        <h2 class="logo">🍨 Napolitask</h2>
+        <ul class="menu">
+            <li><a href="/">Início</a></li>
+            <li><a href="/Tarefas/Create" class="ativo">Nova Tarefa</a></li>
+            <li><a href="/Tarefas/Sobre">Sobre</a></li>
+        </ul>
+    </div>
+</nav>
+
+<section class="conteudo">
+    <h1 class="titulo">⊹ Criar Nova Tarefa ⊹</h1>
+
+    <div class="form-container">
+        <form asp-action="Create" method="post" class="formularioTarefa">
+            <div class="campo">
+                <label class="label">Título</label>
+                <input asp-for="Titulo" class="input" placeholder="Ex: Comprar flores" required />
+            </div>
+
+            <div class="campo">
+                <label class="label">Descrição</label>
+                <textarea asp-for="Descricao" class="input textarea" placeholder="Descreva a tarefa..." required></textarea>
+            </div>
+
+            <div class="botoes">
+                <a class="botao botao-cancelar" asp-action="Index">
+                    <i class="fa-solid fa-xmark"></i> Cancelar
+                </a>
+                <button class="botao botao-salvar" type="submit">
+                    <i class="fa-solid fa-floppy-disk"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
 
 <style>
-
     .titulo {
         text-align: center;
-        font-size: 30px;
-        color: #7e614a !important;
-        background-color: #ffe0e9;
-        width: 1299px;
-        padding: 5px;
-        border: 5px dashed #ab8c74;
-        margin: 2px;
-        margin-bottom: 25px;
+        font-size: 28px;
+        color: #7e614a;
+        background-color: #ffd2d4;
+        width: fit-content;
+        margin: 20px auto;
+        padding: 8px 20px;
+        border-radius: 12px;
+        border: 2px dashed #ab8c74;
+        box-shadow:0 3px 6px rgba(126,97,74,0.2);
     }
 
-    .arte {
-        white-space: pre;
-        font-family: monospace;
-        font-size: 12px;
-        color: #ff0a54;
-        cursor: default;
-        display: flex;
-        align-items: flex-end;
-        margin-left: 100px;
+    /* .form-container {
+        background-color: #fffbde;
+        border: 2px solid #b49982;
+        border-radius: 12px;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto 30px auto;
+        box-shadow: 0 4px 10px rgba(126,97,74,0.15);
+    } */
+
+    .label {
+        display: block;
+        font-size: 16px;
+        color: #7e6651;
+        margin-bottom: 5px;
     }
 
-    .container-tarefas {
-        display: flex;
-        align-items: flex-start;
-    }
-
-    .textoEscrever {
-        font-size: 20px;
-        color: #ab8c74;
-        padding: 3px;
-        margin-left: 20px;
-        display: block; 
-        margin-bottom: 1px;
-    }
-
-    .tituloEscrever {
-        width: 100px;
-        margin-bottom: 2px;
-    }
-
-    .tituloInput {
-        height: 18px !important;
-        margin-bottom: 20px;
-        width: 415px;
-    }
-
-    .inputText {
-        width: 450px;
+    .input {
+        width: 95%;
+        padding: 10px;
+        border-radius: 8px;
         border: 2px solid #ab8c74;
-        display: inline-block;
-        height: 70px;
-        border-radius:5px;
-        margin-left:18px;
+        margin-bottom: 15px;
+        font-size: 15px;
+    }
+
+    .textarea {
+        height: 100px;
+        resize: vertical;
     }
 
     .botoes {
         display: flex;
         justify-content: flex-end;
-        gap: 10px; /* espaço entre os botões */
-        margin-top: 15px;
-        margin-right: 10px;
+        gap: 10px;
     }
 
-    .botaoCancelar, .botaoSalvar {
-        padding: 5px 25px;
-        font-size: 15px;
+    .botao {
+        padding: 8px 20px;
+        border-radius: 8px;
         font-weight: bold;
-        border-radius: 5px;
         border: 2px solid #b49982;
-        text-decoration: none;
         cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 5px;
     }
 
-    .botaoSalvar {
+    .botao-salvar {
         background-color: #ffd2d4;
         color: #7e6651;
     }
 
-        .botaoSalvar:hover {
+        .botao-salvar:hover {
             background-color: #fbb3b6;
-            color: #7e614a;
             border-color: #7e614a;
         }
 
-    .botaoCancelar {
-        background-color: #f8e0c7;
+    .botao-cancelar {
+        background-color: #f6e2b3;
         color: #7e614a;
     }
 
-        .botaoCancelar:hover {
+        .botao-cancelar:hover {
             background-color: #f1c79b;
-            color: #7e4a2e;
-            border-color: #7e4a2e;
+            border-color: #7e614a;
         }
 
-    .containerDesc {
-        background-color: #fff0f3;
-        border: 3px solid #ab8c74;
-        padding: 5px;
-        width: 600px;
-        border-radius: 5px;
-        display:flex;
-        flex-wrap:wrap;
+    .menu li a.ativo {
+        background-color: #ff8daa;
+        color: #fff;
+        padding: 5px 15px;
+        border-radius: 8px;
     }
-
-    /* .labelDescricao {
-        display: block;
-        margin-bottom: 5px;
-    } */
-
 </style>
 
-<h1 class="titulo">CRIAR TAREFA</h1>
+    <meta charset="UTF-8">
+    <title>Emoji Sorvete Fofinho</title>
 
-<div class="container-tarefas">
-    <div class="containerDesc">
-        <form asp-action="Create" method="post">
-            <label class="textoEscrever tituloEscrever">Título: </label>
-            <input class="inputText tituloInput" type="text" />
-            <br />
-            <label class="textoEscrever">Descrição: </label>
-            <textarea class="inputText"></textarea>
-            <br />
+    <!-- Vanilla Tilt -->
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
 
+    <!-- tsParticles -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.0/tsparticles.bundle.min.js"></script>
 
-            <div class="botoes">
-                <a class="botaoCancelar" asp-action="Index">Cancelar</a>
-                <button class="botaoSalvar" type="submit">Salvar</button>
-            </div>
-        </form>
+    <!-- Anime.js -->
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #fffaf0;
+            overflow: hidden;
+            margin: 0;
+        }
+
+        .fofa-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+        }
+
+        .fofa-img {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255,182,193,0.5); 
+            transition: box-shadow 0.3s;
+        }
+
+            .fofa-img:hover {
+                box-shadow: 0 0 40px rgba(255,182,193,0.8);
+            }
+
+        #particles-js {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+    </style>
+
+    <div class="fofa-container">
+        <div id="particles-js"></div>
+    <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExYmthbXh1OWJqc2JnZ3gyOW9ncG04a2J6dDRrdXBuOGQ3NGhzaHlheCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/dvoJndd3M2EBq/giphy.gif" class="fofa-img tilt" data-tilt data-tilt-max="15" data-tilt-speed="400">
     </div>
 
-    <p class="arte">
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⠴⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⢾⣛⡆⠈⡏⠰⠶⠃⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢦⣿⣄⣉⣁⣤⠽⣦⣤⡶⠶⣤⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠚⠹⡉⢃⣴⠟⠉⠀⠀⠀⠀⠉⠻⣦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣤⢡⡿⠁⠀⠀⠀⠀⠀⠀⠀⠀⠈⢷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡂⣿⡇⠀⠀⠀⠀⣠⣤⣀⠀⠀⠀⠘⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⢻⣷⠀⠀⠀⠀⢯⡉⣿⡆⠀⠀⣰⡇⠀⢀⣀⢤⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠘⢿⣧⣀⠀⠀⢀⣴⡟⠀⠀⣰⣿⡷⢏⡭⠔⠹⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⠛⠿⠿⠟⠋⠀⢀⣼⣿⣿⣿⠿⣭⡉⢛⡃⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⣀⣤⠶⠿⣟⣟⣝⡷⣲⢤⣀⠀⠀⠀⠀⠀⠀⢠⠀⠀⠀⠀⠀⠀⣠⣾⡿⠃⠹⡟⢖⠢⠽⠦⠁⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⢀⣴⠞⠁⠀⠀⠀⠀⠀⠉⠙⢦⣕⡯⣷⣄⠀⠀⠠⣴⠋⢓⡶⠂⠀⢀⣼⣿⠟⠁⠀⠀⠈⠺⡄⠋⣀⣰⣀⠀⠀⠀⠀⠀⠀
-        ⠀⣠⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠙⢯⣒⢭⣦⠀⠀⢸⠕⠦⠇⠀⣤⣿⡿⠃⣠⠴⠶⠶⣤⡀⠀⠀⠼⠿⡏⠀⠀⠀⠀⠀⠀
-        ⢀⡏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣝⡫⢧⠀⠀⠀⠀⣠⣾⡿⠉⠀⢸⠁⢀⣀⠀⠈⣷⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⣼⠁⠀⠀⠀⠀⣠⣶⣿⣿⣷⣦⡀⠀⠀⠀⠀⠙⡮⣛⡆⠀⠀⣰⣿⡏⢐⡀⠀⠸⣦⣀⣨⠇⠒⣸⣀⣀⣄⣀⡀⠀⠀⠀⠀⠀⠀
-        ⢹⠆⠀⠀⠀⢠⣿⡿⠃⠀⠀⠉⢻⡄⠀⠀⠀⠀⠙⣗⢿⠀⣸⡟⡙⢷⡈⢠⠀⡀⠈⠉⣁⠘⣠⠟⠉⠉⠙⢿⣿⡆⠀⠀⠀⠀⠀
-        ⠘⣇⠀⠀⠀⠈⢿⡇⠀⢲⠀⠀⠀⢻⡀⠀⢤⣴⡀⠹⣽⣴⡿⣁⠀⠈⠻⣦⣤⣥⣌⣡⡤⠞⠁⠀⣰⠛⠆⣸⣿⡇⠀⠀⠀⠀⠀
-        ⠀⢻⡄⠀⠀⠀⠀⠉⠙⠉⠀⠀⠀⢸⠀⠀⠚⠻⠁⠀⢿⣿⢣⢀⡤⠶⠲⢮⣍⡉⠉⠁⠀⣤⠀⠀⠘⢿⣿⡿⠏⠀⠀⠀⠀⠀⠀
-        ⠀⠀⢻⣄⠀⠀⠀⠀⠀⠀⠀⠀⣰⠋⠀⡀⠀⠀⠀⠀⢸⣿⣰⠏⢀⡴⢶⡄⢸⡇⠀⢖⠚⠉⠓⣲⠆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠙⠷⣦⣄⣀⣀⣠⣴⠾⠁⠀⢰⣕⢲⣪⡉⠅⣾⣿⡟⠀⠈⠳⠭⠵⠋⠀⠀⣼⣁⢄⣸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠀⠀⠀⢤⡼⠉⢹⡣⣉⠀⣿⣿⡇⠀⠀⢠⣴⠶⢦⡀⠀⠁⠀⠀⣙⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡔⠟⡛⡀⡆⣿⡟⣷⠀⠀⣿⣇⣲⠈⡿⢀⣴⣾⣿⠿⠿⣿⣷⣦⡀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⢰⡀⡷⣰⣇⡴⠠⠜⠀⠀⠀⠀⣿⡇⡘⣷⣄⠀⠙⣉⠞⢡⣿⡟⠁⠀⠀⠀⠀⠈⠻⣿⣆⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠠⣤⣯⣷⣧⠿⠵⠶⠶⣤⣄⡀⠀⢻⣇⠡⡌⠻⣏⠉⠁⠀⢺⣿⠀⠀⢀⣶⣶⣤⠀⠀⠘⣿⡀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠠⢾⡿⡋⠗⠈⠃⠈⠁⠰⠉⡻⢶⣜⣿⢘⠂⣠⣌⣷⡀⠀⢸⣿⡆⠀⠈⠧⠄⢸⡇⠀⠀⣹⠇⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⣰⠏⠄⠁⠀⠀⠀⠀⠀⠀⠀⠁⠈⠙⢿⣏⠰⡏⣬⣿⢻⡀⠀⠻⣿⣄⠀⠀⣠⠞⠀⠀⢠⡟⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⢰⡏⠴⠀⠀⠀⠀⢀⣠⣀⣀⠀⠀⠀⠀⠈⢻⣧⡙⢦⣤⡾⠁⠀⠀⠈⠙⠛⠋⠁⠀⠀⣠⡞⠁⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠸⢿⡀⠀⠀⠀⣰⠋⠁⠀⠉⠙⢦⠀⠀⠀⠀⢻⣟⢦⣄⡀⠀⠀⠀⠀⠀⠀⠀⣀⣤⠾⠋⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⢹⡹⣇⠀⠀⠘⡇⠀⠀⠖⡆⠀⠘⣧⠀⠀⠀⠀⠻⣎⢿⠹⠳⢲⡲⢶⠶⠾⠛⠉⣁⣠⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠸⣎⡹⣧⡀⠀⠻⣦⣤⠴⠃⠀⢰⠏⠀⣤⣀⣴⠀⠙⣧⡱⡀⢠⡾⢟⣛⡓⣆⠀⠿⣿⠛⠁⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠱⣊⠜⣻⣶⣄⣀⠀⠀⠀⣀⠟⠠⣔⣊⠁⣶⣄⠀⠈⢷⣅⢸⠅⢸⣓⣃⣼⠀⠀⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠙⢮⡞⡜⡝⡝⡟⡯⠟⠁⠀⠀⠀⠈⠿⠀⠀⠀⠀⠀⠹⣶⡳⢤⣹⣯⡥⠴⠶⠶⠦⣄⠀⠀⠀⠀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠉⠉⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣀⠀⠈⠻⣦⡀⠀⠀⡞⣙⣷⠀⢈⡆⠀⠀⣀⠀⠀⠀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢠⣿⠏⣤⢈⣿⠀⠀⠀⠈⠳⣄⠈⣷⣈⣉⣠⡼⢡⡾⠛⠉⠙⢳⡀
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣄⠈⠉⠁⢀⣀⣤⣶⣶⣾⣷⣌⠙⠋⠁⠀⣿⠀⢤⡀⠀⠀⣷
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠛⠻⠿⠛⠛⠉⠁⡼⠋⢠⠨⠍⡳⢄⡀⠀⠘⠻⠛⠁⠀⣰⡿
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⡇⣔⡒⡞⡀⠁⠰⠙⡲⢦⣤⣤⣤⣾⠿⠁
-        ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠺⠞⠧⠁⠀⠀⠀⠁⠐⠉⠉⠉⠀⠀⠀
-    </p>
-</div>
+
+    <script>
+        VanillaTilt.init(document.querySelectorAll(".tilt"));
+
+        anime({
+            targets: '.fofa-img',
+            scale: [1, 1.05],
+            direction: 'alternate',
+            loop: true,
+            easing: 'easeInOutSine',
+            duration: 1500
+        });
+        tsParticles.load("particles-js", {
+            particles: {
+                number: { value: 0 },
+                shape: { type: ["heart", "star"] },
+                size: { value: { min: 5, max: 12 } },
+                color: { value: ["#ff69b4", "#ffff99"] },
+                move: { direction: "top", speed: 2, outModes: "destroy" },
+                opacity: { value: 0.8 },
+            },
+            interactivity: {
+                events: {
+                    onHover: { enable: true, mode: "emit" },
+                },
+                modes: {
+                    emit: { quantity: 3 }
+                }
+            },
+            detectRetina: true
+        });
+    </script>
+
