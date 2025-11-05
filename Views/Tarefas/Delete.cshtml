@@ -1,6 +1,15 @@
-﻿namespace GestorTarefas.Views.Tarefas
-{
-    public class Delete
-    {
-    }
-}
+﻿@model GestorTarefas.Models.Tarefa
+
+<h2>Excluir Tarefa</h2>
+
+<div>
+    <p>Tem certeza que deseja excluir esta tarefa?</p>
+    <p><strong>@Model.Titulo</strong></p>
+    <p>@Model.Descricao</p>
+
+    <form asp-action="Delete" method="post">
+        <input type="hidden" asp-for="Id" />
+        <button type="submit" class="botao botao-salvar">Excluir</button>
+        <a asp-action="Index" class="botao botao-cancelar">Cancelar</a>
+    </form>
+</div>
