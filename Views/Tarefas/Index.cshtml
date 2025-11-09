@@ -274,27 +274,28 @@
             <div class="container-tarefas">
                 @foreach (var item in Model)
             {
-                <div class="card-tarefa">
-                    <h4 id="descTitulo">@item.Titulo</h4>
+     <tr>
+        <td>@item.Titulo</td>
+        <td>@item.DataCriacao.ToShortDateString()</td>
+        <td>
+            @if (item.Concluida)
+            {
+                <span class="badge bg-success">🟢Concluída</span>
+            }
+            else
+            {
+                <span class="badge bg-warning text-dark">🔴Pendente</span>
+            }
+        </td>
+        <td>
+            <form asp-action="ToggleStatus" method="post" style="display:inline;">
+                <input type="hidden" name="id" value="@item.Id" />
+                <button class="btn btn-sm btn-secondary">Alternar</button>
+            </form>
 
-                    <div class="linha-tarefa">
-                        @* <p class="seta">→</p> *@
-                        <p id="descTarefa">@item.Descricao</p>
-                    </div>
-
-                    <p class="status">
-                        <b>Status:</b> @(item.Concluida ? "🟢 Concluída" : "🔴 Pendente")
-                    </p>
-
-                    <div class="botoes-tarefa">
-                        <a id="editar" class="botao" asp-action="Edit" asp-route-id="@item.Id">
-                            <i class="fa-solid fa-pen"></i> Editar
-                        </a>
-                        <a id="excluir" class="botao" asp-action="Delete" asp-route-id="@item.Id">
-                        <i class="fa-solid fa-trash"></i> Excluir
-                        </a>
-                    </div>
-                </div>
+            <a class="btn btn-sm btn-danger" href="/Tarefas/Delete/@item.Id">Excluir</a>
+        </td>
+    </tr>
             }
             </div>
         </div>

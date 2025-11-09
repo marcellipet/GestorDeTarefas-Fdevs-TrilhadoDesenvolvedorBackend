@@ -13,25 +13,30 @@ namespace GestorTarefas.Controllers
             _context = context;
         }
 
+        // LISTAR
         public async Task<IActionResult> Index()
         {
             var tarefas = await _context.Tarefas
                 .OrderByDescending(t => t.DataCriacao)
                 .ToListAsync();
+
             return View(tarefas);
         }
 
+        // GET - CRIAR
         public IActionResult Create()
         {
             return View();
         }
 
+        // POST - CRIAR
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Tarefa tarefa)
         {
             if (ModelState.IsValid)
             {
+                tarefa.DataCriacao = DateTime.Now;
                 _context.Add(tarefa);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -39,57 +44,41 @@ namespace GestorTarefas.Controllers
             return View(tarefa);
         }
 
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null) return NotFound();
-            var tarefa = await _context.Tarefas.FindAsync(id);
-            if (tarefa == null) return NotFound();
-            return View(tarefa);
-        }
-
+        // MARCAR COMO CONCLUÍDA / NÃO CONCLUÍDA
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Tarefa tarefa)
+        public async Task<IActionResult> ToggleStatus(int id)
         {
-            if (id != tarefa.Id) return NotFound();
+            var tarefa = await _context.Tarefas.FindAsync(id);
+            if (tarefa == null)
+                return NotFound();
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(tarefa);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!_context.Tarefas.Any(e => e.Id == tarefa.Id))
-                        return NotFound();
-                    else
-                        throw;
-                }
-                return RedirectToAction(nameof(Index));
-            }
+            tarefa.Concluida = !tarefa.Concluida;
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // GET - CONFIRMAR DELETE
+        public async Task<IActionResult> Delete(int id)
+        {
+            var tarefa = await _context.Tarefas.FirstOrDefaultAsync(t => t.Id == id);
+            if (tarefa == null)
+                return NotFound();
+
             return View(tarefa);
         }
 
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null) return NotFound();
-            var tarefa = await _context.Tarefas.FirstOrDefaultAsync(m => m.Id == id);
-            if (tarefa == null) return NotFound();
-            return View(tarefa);
-        }
-
+        // POST - DELETE
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var tarefa = await _context.Tarefas.FindAsync(id);
-            if (tarefa != null)
-            {
-                _context.Tarefas.Remove(tarefa);
-                await _context.SaveChangesAsync();
-            }
+            if (tarefa == null)
+                return NotFound();
+
+            _context.Tarefas.Remove(tarefa);
+            await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
     }
